@@ -38,11 +38,15 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    //Java Lib
+    compile project(':jokelib')
+    //Android Lib
+    compile project(':androidlibrary')
+
     //Support
     compile 'com.android.support:appcompat-v7:23.1.1'
+    //Google Play services
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     //Injections & validations
     compile 'com.jakewharton:butterknife:7.0.1'
-    //Java Lib
-    compile project(':jokelib')
 }

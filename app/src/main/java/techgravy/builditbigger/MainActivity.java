@@ -1,10 +1,10 @@
 package techgravy.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.JokeProvider;
 import com.google.android.gms.ads.AdRequest;
@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import techgravy.androidlibrary.JokeDisplayActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.tellJokeButton)
     public void onClick() {
-        Toast.makeText(this, jokeProvider.getRandomJoke(), Toast.LENGTH_SHORT).show();
+        // Getting a random joke from jokelib
+        String joke = jokeProvider.getRandomJoke();
+        // Starting JokeDisplayActivity passing the random joke as intent
+        Intent intent = new Intent(this, JokeDisplayActivity.class);
+        intent.putExtra(JokeDisplayActivity.INTENTTAG, joke);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
