@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.JokeProvider;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -21,13 +22,14 @@ public class MainActivity extends AppCompatActivity {
     TextView instructionsTextView;
     @Bind(R.id.tellJokeButton)
     Button tellJokeButton;
+    JokeProvider jokeProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        jokeProvider = new JokeProvider();
         setupAd();
     }
 
@@ -41,6 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.tellJokeButton)
     public void onClick() {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, jokeProvider.getRandomJoke(), Toast.LENGTH_SHORT).show();
     }
 }
