@@ -51,6 +51,6 @@ public class MainFragment extends Fragment {
 
     @OnClick(R.id.tellJokeButton)
     public void onClick() {
-        new EndPointsAsyncTask(getActivity()).execute();
+        new EndPointsAsyncTask(getActivity(),true).execute();
     }
 }

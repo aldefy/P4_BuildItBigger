@@ -26,16 +26,17 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
     private Context context;
     private String resultJoke;
     private InterstitialAd mInterstitialAd;
+    private boolean isProgress;
 
-
-    public EndPointsAsyncTask(Context context) {
+    public EndPointsAsyncTask(Context context, boolean isProgress) {
+        this.isProgress = isProgress;
         this.context = context;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        CommonUtils.displayProgressDialog(context, "Fetching a fancy joke");
+        if (isProgress) CommonUtils.displayProgressDialog(context, "Fetching a fancy joke");
     }
 
     @Override
@@ -68,8 +69,7 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                CommonUtils.dismissProgressDialog();
-
+                if (isProgress) CommonUtils.dismissProgressDialog();
                 mInterstitialAd.show();
             }
 

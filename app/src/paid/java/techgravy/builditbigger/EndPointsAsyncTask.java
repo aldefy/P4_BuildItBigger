@@ -21,15 +21,21 @@ import techgravy.p4.backened.jokeApi.model.JokeBean;
 class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static JokeApi myApiService = null;
     private Context context;
+    private boolean isProgress;
 
 
-    public EndPointsAsyncTask(Context context) {
+    public EndPointsAsyncTask(Context context, boolean isProgress) {
+
+        this.isProgress = isProgress;
         this.context = context;
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        CommonUtils.displayProgressDialog(context, "Fetching a fancy joke");
+        if (isProgress) {
+            CommonUtils.displayProgressDialog(context, "Fetching a fancy joke");
+        }
     }
 
     @Override
@@ -51,8 +57,9 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
     @Override
     protected void onPostExecute(String result) {
-        Log.d("Result",result);
-        CommonUtils.dismissProgressDialog();
+        Log.d("Result", result);
+        if (isProgress)
+            CommonUtils.dismissProgressDialog();
         Intent intent = new Intent(context, JokeDisplayActivity.class);
         intent.putExtra(JokeDisplayActivity.INTENT_TAG, result);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
