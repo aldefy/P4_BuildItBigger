@@ -26,7 +26,11 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
     public EndPointsAsyncTask(Context context) {
         this.context = context;
     }
-
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        CommonUtils.displayProgressDialog(context, "Fetching a fancy joke");
+    }
 
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
@@ -34,13 +38,8 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
             JokeApi.Builder builder = new JokeApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     .setRootUrl("http://192.168.1.84:8080/_ah/api/");
-
-
             myApiService = builder.build();
         }
-
-
-
 
         try {
             return myApiService.putJoke(new JokeBean()).execute().getJoke();
@@ -53,6 +52,7 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
     @Override
     protected void onPostExecute(String result) {
         Log.d("Result",result);
+        CommonUtils.dismissProgressDialog();
         Intent intent = new Intent(context, JokeDisplayActivity.class);
         intent.putExtra(JokeDisplayActivity.INTENT_TAG, result);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

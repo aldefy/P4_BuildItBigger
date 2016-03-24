@@ -3,7 +3,6 @@ package techgravy.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.provider.Settings.Secure;
 import android.util.Log;
 import android.util.Pair;
 
@@ -27,18 +26,16 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
     private Context context;
     private String resultJoke;
     private InterstitialAd mInterstitialAd;
-    private String deviceId;
 
 
     public EndPointsAsyncTask(Context context) {
         this.context = context;
-        deviceId = Secure.getString(context.getContentResolver(),
-                Secure.ANDROID_ID);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        CommonUtils.displayProgressDialog(context, "Fetching a fancy joke");
     }
 
     @Override
@@ -66,12 +63,13 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
         Log.d("Result", result);
         resultJoke = result;
         mInterstitialAd = new InterstitialAd(context);
-        Log.d("Ad","AdUnitId = "+context.getString(R.string.interstitial_ad_unit_id) + " and the device id = "+ deviceId );
         mInterstitialAd.setAdUnitId(context.getString(R.string.interstitial_ad_unit_id));
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
+                CommonUtils.dismissProgressDialog();
+
                 mInterstitialAd.show();
             }
 
