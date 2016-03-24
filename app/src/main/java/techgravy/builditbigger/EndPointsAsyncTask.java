@@ -33,7 +33,7 @@ class EndPointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
         if (myApiService == null) {
             JokeApi.Builder builder = new JokeApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-                    .setRootUrl("http://10.0.1.61:8080/_ah/api/");
+                    .setRootUrl("http://192.168.1.84:8080/_ah/api/");
 
 
             myApiService = builder.build();

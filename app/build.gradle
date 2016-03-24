@@ -32,6 +32,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        productFlavors {
+            free {
+                applicationId "techgravy.builditbigger.free"
+            }
+            paid {
+                applicationId "techgravy.builditbigger.paid"
+            }
+        }
     }
 }
 
@@ -45,7 +53,7 @@ dependencies {
 
     //Support
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    freeCompile 'com.google.android.gms:play-services-ads:8.4.0'
 
     //Injections & validations
     compile 'com.jakewharton:butterknife:7.0.1'
